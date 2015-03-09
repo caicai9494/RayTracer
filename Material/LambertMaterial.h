@@ -5,7 +5,7 @@
 #ifndef CSE168_LAMBERTMATERIAL_H
 #define CSE168_LAMBERTMATERIAL_H
 
-#include "Material.h"
+#include <Material/Material.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 

@@ -5,7 +5,7 @@
 #ifndef CSE168_MATRIX34_H
 #define CSE168_MATRIX34_H
 
-#include "Vector3.h"
+#include <Core/Vector3.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 

@@ -1,11 +1,10 @@
-#include "InstanceObject.h"
+#include <Object/InstanceObject.h>
 
 
 InstanceObject::InstanceObject(Object &obj)
 {
     child = &obj;
 }
-
 
 void InstanceObject::SetChild(Object &obj)
 {
@@ -19,7 +18,7 @@ void InstanceObject::SetMatrix(const Matrix34 &mtx)
     InverseMatrix.Inverse();
 }
 
-bool InstanceObject::Intersect(const Ray &ray, Intersection &hit)
+bool InstanceObject::Intersect(const Ray &ray, Intersection &hit) const
 {
     Ray ray2;
     InverseMatrix.Transform(ray.Origin, ray2.Origin);
@@ -31,4 +30,6 @@ bool InstanceObject::Intersect(const Ray &ray, Intersection &hit)
     Matrix.Transform(hit.Position, hit.Position);
     Matrix.Transform3x3(hit.Normal, hit.Normal);
     hit.HitDistance = ray.Origin.Distance(hit.Position);
+
+    return true;
 }

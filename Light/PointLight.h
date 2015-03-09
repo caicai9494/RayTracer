@@ -5,6 +5,8 @@
 #ifndef CSE168_POINTLIGHT_H
 #define CSE168_POINTLIGHT_H
 
+#include <Light/Light.h>
+
 class PointLight: public Light
 {
     public:

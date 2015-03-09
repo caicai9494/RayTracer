@@ -5,8 +5,10 @@
 #ifndef CSE168_MESHOBJECT_H
 #define CSE168_MESHOBJECT_H
 
-#include "Object.h"
-#include "Triangle.h"
+#include <Object/MeshObject.h>
+#include <Object/Triangle.h>
+#include <Material/LambertMaterial.h>
+#include <Core/Matrix34.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 

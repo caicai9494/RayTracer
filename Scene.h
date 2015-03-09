@@ -5,8 +5,8 @@
 #ifndef CSE168_SCENE_H
 #define CSE168_SCENE_H
 
-#include "Object.h"
-#include "Light.h"
+#include <Object/Object.h>
+#include <Light/Light.h>
 #include <vector>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -19,16 +19,11 @@ public:
 	void AddLight(Light &lgt)					{Lights.push_back(&lgt);}
 	void SetSkyColor(const Color sky)			{SkyColor=sky;}
 
-	int GetNumLights()							{return Lights.size();}
-	Light &GetLight(int i)						{return *Lights[i];}
-	Color GetSkyColor()							{return SkyColor;}
+	UINT GetNumLights()const							{return Lights.size();}
+	Light &GetLight(int i)const						{return *Lights[i];}
+	Color GetSkyColor()const							{return SkyColor;}
 
-	bool Intersect(const Ray &ray,Intersection &hit) {
-		bool success=false;
-		for(unsigned int i=0;i<Objects.size();i++)
-			if(Objects[i]->Intersect(ray,hit)) success=true;
-		return success;
-	}
+	bool Intersect(const Ray &ray,Intersection &hit) const;
 
 private:
 	std::vector<Object*> Objects;

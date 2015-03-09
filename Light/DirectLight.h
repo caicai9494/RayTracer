@@ -5,7 +5,7 @@
 #ifndef CSE168_DIRECTLIGHT_H
 #define CSE168_DIRECTLIGHT_H
 
-#include "Light.h"
+#include <Light/Light.h>
 
 class DirectLight : public Light
 {

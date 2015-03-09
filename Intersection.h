@@ -5,9 +5,9 @@
 #ifndef CSE168_INTERSECTION_H
 #define CSE168_INTERSECTION_H
 
-#include "Vector3.h"
-#include "Color.h"
-#include "Object.h"
+#include <Core/Vector3.h>
+#include <Core/Color.h>
+#include <Object/Object.h>
 
 class Material;
 class Object;

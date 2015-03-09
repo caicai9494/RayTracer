@@ -5,10 +5,10 @@
 #ifndef CSE168_TRIANGLE_H
 #define CSE168_TRIANGLE_H
 
-#include "Vertex.h"
-#include "Material.h"
-#include "Ray.h"
-#include "Matrix34.h"
+#include <Object/Vertex.h>
+#include <Material/Material.h>
+#include <Ray.h>
+#include <Core/Matrix34.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 

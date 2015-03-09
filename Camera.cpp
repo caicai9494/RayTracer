@@ -2,8 +2,8 @@
 // Camera.cpp
 ////////////////////////////////////////
 
-#include "Camera.h"
-#include "Intersection.h"
+#include <Camera.h>
+#include <Intersection.h>
 Camera::Camera()
 {
     BMP = 0;
@@ -52,7 +52,39 @@ void Camera::SetAspect(float asp)
     Aspect = asp;
 }
 
-void Camera::Render(Scene &s)
+void Camera::RenderPixel(const Scene &s, int x, int y)
+{
+    Ray ray;
+    ray.Origin = Position;
+
+    Vector3 dir;
+    Intersection intrs;
+
+    dir.x = x;
+    dir.y = y;
+    dir.z = 0;
+    dir = dir - ray.Origin;
+    dir.Normalize();
+
+    //WorldMatrix.Transform(ray.Origin, ray.Origin);
+    //WorldMatrix.Transform(ray.Origin, ray.Origin);
+    ray.Direction = dir;
+
+    if(s.Intersect(ray, intrs))
+    {
+	for(UINT k = 0; k < s.GetNumLights(); k++)
+	{
+	    Vector3 lsPos, lsDir;
+	    float iten = s.GetLight(k).Illuminate(intrs.Position, intrs.Shade, lsPos, lsDir);
+	    iten++;
+	}
+	BMP->SetPixel(x, y, intrs.Shade.ToInt());
+    }
+    else
+	BMP->SetPixel(x, y, s.GetSkyColor().ToInt());
+
+}
+void Camera::Render(const Scene &s)
 {
     BMP = new Bitmap(XRes, YRes);
 
@@ -62,37 +94,11 @@ void Camera::Render(Scene &s)
     float t = YRes / 2.0;
     float b = -t;
 
-    Ray ray;
-    ray.Origin = Position;
-
-    Vector3 dir;
-    Intersection intrs;
-    for(UINT i = 0; i < XRes; i++)
+    for(UINT i = 0; i < XRes - 1; i++)
     {
-	for(UINT j = 0; j < YRes; j++)
+	for(UINT j = 0; j < YRes - 1; j++)
 	{
-	    dir.x = l + i;
-	    dir.y = b + j;
-	    dir.z = 0;
-	    dir = dir - ray.Origin;
-	    dir.Normalize();
-
-	    //WorldMatrix.Transform(ray.Origin, ray.Origin);
-	    //WorldMatrix.Transform(ray.Origin, ray.Origin);
-	    ray.Direction = dir;
-
-	    if(s.Intersect(ray, intrs))
-	    {
-		for(UINT k = 0; k < s.GetNumLights(); k++)
-		{
-		    Vector3 lsPos, lsDir;
-		    float iten = s.GetLight(k).Illuminate(intrs.Position, intrs.Shade, lsPos, lsDir);
-		}
-		BMP->SetPixel(i, j, intrs.Shade.ToInt());
-	    }
-	    else
-		BMP->SetPixel(i, j, s.GetSkyColor().ToInt());
-
+	    RenderPixel(s, l + i, b + j);
 	}
     }
 }

@@ -1,22 +1,17 @@
 ////////////////////////////////////////
-// Vertex.h
+// Material.h
 ////////////////////////////////////////
 
-#ifndef CSE168_VERTEX_H
-#define CSE168_VERTEX_H
+#ifndef CSE168_MATERIAL_H
+#define CSE168_MATERIAL_H
 
-#include "Vector3.h"
+#include <Intersection.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class Vertex {
+class Material {
 public:
-	void Set(Vector3 &p,Vector3 &n,Vector3 &t)		{Position=p; Normal=n; TexCoord=t;}
-
-public:
-	Vector3 Position;
-	Vector3 Normal;
-	Vector3 TexCoord;
+	virtual void ComputeReflectance(Color &col, const Vector3 &in, const Vector3 &out, const Intersection &hit)=0;
 };
 
 ////////////////////////////////////////////////////////////////////////////////

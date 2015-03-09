@@ -5,10 +5,10 @@
 #ifndef CSE168_CAMERA_H
 #define CSE168_CAMERA_H
 
-#include "Vertex.h"
-#include "Matrix34.h"
-#include "Scene.h"
-#include "Bitmap.h" 
+#include <Object/Vertex.h>
+#include <Core/Matrix34.h>
+#include <Scene.h>
+#include <Core/Bitmap.h>
 
 class Camera{
     public:
@@ -21,7 +21,7 @@ class Camera{
 	void SetFOV(float angle);
 	void SetAspect(float asp);
 
-	void Render(Scene &s);
+	void Render(const Scene &s);
 	void SaveBitmap(const char* path);
 
 	float GetHorizontalFOV();
@@ -36,7 +36,8 @@ class Camera{
 	Vector3 Position;
 	Vector3 Target;
 
-	//void RenderPath(Scene 
+
+	void RenderPixel(const Scene &s, int x, int y);
 
 };
 

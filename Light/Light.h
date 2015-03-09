@@ -5,8 +5,8 @@
 #ifndef CSE168_LIGHT_H
 #define CSE168_LIGHT_H
 
-#include "Vector3.h"
-#include "Color.h"
+#include <Core/Vector3.h>
+#include <Core/Color.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 
