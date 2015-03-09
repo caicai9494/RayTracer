@@ -11,8 +11,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 class Light {
-public:
-	Light()									{Intensity=1.0; BaseColor=Color::WHITE;}
+public: Light()									{Intensity=1.0; BaseColor=Color::WHITE;}
 	void SetBaseColor(const Color &col)		{BaseColor=col;}
 	void SetIntensity(float i)				{Intensity=i;}
 
@@ -26,6 +25,4 @@ protected:
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class PointLight: public Light{
-};
 #endif

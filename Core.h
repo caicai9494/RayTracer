@@ -15,6 +15,8 @@
 
 #define PI	3.14159265f
 
+typedef unsigned int UINT;
+
 inline int Min(int a,int b)					{return a<b ? a : b;}
 inline float Min(float a,float b)			{return a<b ? a : b;}
 inline int Max(int a,int b)					{return a>b ? a : b;}

@@ -40,7 +40,7 @@ void project1() {
 	inst1.SetMatrix(mtx);
 	scn.AddObject(inst1);
 
-	InstanceObject inst2(box2);
+	InstanceObject inst3(box2);
 	mtx.MakeRotateY(1.0f);
 	mtx.d.Set(-1.0f,0.0f,1.0f);
 	inst2.SetMatrix(mtx);
