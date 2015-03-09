@@ -81,7 +81,14 @@ void Camera::Render(Scene s)
 	    ray.Direction = dir;
 
 	    if(s.Intersect(ray, intrs))
+	    {
+		for(UINT k = 0; k < s.GetNumLights(); k++)
+		{
+		    Vector3 lsPos, lsDir;
+		    float iten = s.GetLight(k).Illuminate(intrs.Position, intrs.Shade, lsPos, lsDir);
+		}
 		BMP->SetPixel(i, j, intrs.Shade.ToInt());
+	    }
 	}
     }
 }
