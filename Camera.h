@@ -15,14 +15,13 @@ class Camera{
 	Camera();
 	~Camera();
 
-	static Vector3 UP;
 
-	void LookAt(Vector3 p, Vector3 obj);
+	void LookAt(const Vector3 &p, const Vector3 &obj, const Vector3 &up = Vector3::YAXIS);
 	void SetResolution(int w, int h);
 	void SetFOV(float angle);
 	void SetAspect(float asp);
 
-	void Render(Scene s);
+	void Render(Scene &s);
 	void SaveBitmap(const char* path);
 
 	float GetHorizontalFOV();
@@ -36,6 +35,8 @@ class Camera{
 
 	Vector3 Position;
 	Vector3 Target;
+
+	//void RenderPath(Scene 
 
 };
 

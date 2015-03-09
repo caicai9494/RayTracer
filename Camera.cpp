@@ -13,9 +13,7 @@ Camera::~Camera()
     delete BMP;
 }
 
-Vector3 Camera::UP = Vector3::YAXIS;
-
-void Camera::LookAt(Vector3 p, Vector3 obj)
+void Camera::LookAt(const Vector3 &p, const Vector3 &obj, const Vector3 &up)
 {
     Position = p;
     Target = obj;
@@ -23,7 +21,7 @@ void Camera::LookAt(Vector3 p, Vector3 obj)
     Vector3 c = Position - Target;
     c.Normalize();
     Vector3 a;
-    a.Cross(UP,c);
+    a.Cross(up,c);
     a.Normalize();
     Vector3 b;
     b.Cross(c, a);
@@ -54,7 +52,7 @@ void Camera::SetAspect(float asp)
     Aspect = asp;
 }
 
-void Camera::Render(Scene s)
+void Camera::Render(Scene &s)
 {
     BMP = new Bitmap(XRes, YRes);
 
@@ -75,9 +73,12 @@ void Camera::Render(Scene s)
 	{
 	    dir.x = l + i;
 	    dir.y = b + j;
+	    dir.z = 0;
 	    dir = dir - ray.Origin;
 	    dir.Normalize();
 
+	    //WorldMatrix.Transform(ray.Origin, ray.Origin);
+	    //WorldMatrix.Transform(ray.Origin, ray.Origin);
 	    ray.Direction = dir;
 
 	    if(s.Intersect(ray, intrs))
@@ -89,6 +90,9 @@ void Camera::Render(Scene s)
 		}
 		BMP->SetPixel(i, j, intrs.Shade.ToInt());
 	    }
+	    else
+		BMP->SetPixel(i, j, s.GetSkyColor().ToInt());
+
 	}
     }
 }
