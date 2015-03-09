@@ -1,7 +1,7 @@
 CC=g++
 #LDLIBS=-lSOIL -lGLEW -lGL -lGLU -lglfw3 -lX11 -lXxf86vm -lXrandr -lpthread -lXi
 CFLAGs=-c -Wall -g -O
-OBJ= Bitmap.o Color.o Main.o Matrix34.o MeshObject.o Vector3.o 
+OBJ= Bitmap.o Color.o Main.o Matrix34.o MeshObject.o Vector3.o InstanceObject.o Camera.o Triangle.o
 TARGET= raytracer
 
 	

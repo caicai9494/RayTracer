@@ -71,11 +71,16 @@ void MeshObject::MakeBox(float x,float y,float z,Material *mtl) {
 	Triangles[0].Init(&Vertexes[0],&Vertexes[1],&Vertexes[2],mtl);
 	Triangles[1].Init(&Vertexes[0],&Vertexes[2],&Vertexes[3],mtl);
 
+	// Negative Axis
+	Vector3 NXAXIS = -Vector3::XAXIS;
+	Vector3 NYAXIS = -Vector3::YAXIS;
+	Vector3 NZAXIS = -Vector3::ZAXIS;
+
 	// Left
-	Vertexes[4].Set(p000,-Vector3::XAXIS,t00);
-	Vertexes[5].Set(p001,-Vector3::XAXIS,t10);
-	Vertexes[6].Set(p011,-Vector3::XAXIS,t11);
-	Vertexes[7].Set(p010,-Vector3::XAXIS,t01);
+	Vertexes[4].Set(p000,NXAXIS,t00);
+	Vertexes[5].Set(p001,NXAXIS,t10);
+	Vertexes[6].Set(p011,NXAXIS,t11);
+	Vertexes[7].Set(p010,NXAXIS,t01);
 	Triangles[2].Init(&Vertexes[4],&Vertexes[5],&Vertexes[6],mtl);
 	Triangles[3].Init(&Vertexes[4],&Vertexes[6],&Vertexes[7],mtl);
 
@@ -88,10 +93,10 @@ void MeshObject::MakeBox(float x,float y,float z,Material *mtl) {
 	Triangles[5].Init(&Vertexes[8],&Vertexes[10],&Vertexes[11],mtl);
 
 	// Bottom
-	Vertexes[12].Set(p000,-Vector3::YAXIS,t00);
-	Vertexes[13].Set(p100,-Vector3::YAXIS,t10);
-	Vertexes[14].Set(p101,-Vector3::YAXIS,t11);
-	Vertexes[15].Set(p001,-Vector3::YAXIS,t01);
+	Vertexes[12].Set(p000,NYAXIS,t00);
+	Vertexes[13].Set(p100,NYAXIS,t10);
+	Vertexes[14].Set(p101,NYAXIS,t11);
+	Vertexes[15].Set(p001,NYAXIS,t01);
 	Triangles[6].Init(&Vertexes[12],&Vertexes[13],&Vertexes[14],mtl);
 	Triangles[7].Init(&Vertexes[12],&Vertexes[14],&Vertexes[15],mtl);
 
@@ -104,10 +109,10 @@ void MeshObject::MakeBox(float x,float y,float z,Material *mtl) {
 	Triangles[9].Init(&Vertexes[16],&Vertexes[18],&Vertexes[19],mtl);
 
 	// Back
-	Vertexes[20].Set(p100,-Vector3::ZAXIS,t00);
-	Vertexes[21].Set(p000,-Vector3::ZAXIS,t10);
-	Vertexes[22].Set(p010,-Vector3::ZAXIS,t11);
-	Vertexes[23].Set(p110,-Vector3::ZAXIS,t01);
+	Vertexes[20].Set(p100,NZAXIS,t00);
+	Vertexes[21].Set(p000,NZAXIS,t10);
+	Vertexes[22].Set(p010,NZAXIS,t11);
+	Vertexes[23].Set(p110,NZAXIS,t01);
 	Triangles[10].Init(&Vertexes[20],&Vertexes[21],&Vertexes[22],mtl);
 	Triangles[11].Init(&Vertexes[20],&Vertexes[22],&Vertexes[23],mtl);
 }

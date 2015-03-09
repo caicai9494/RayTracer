@@ -1,5 +1,14 @@
 #include "Triangle.h"
 
+Triangle::Triangle()
+{
+    Vtx[0] = 0;
+    Vtx[1] = 0;
+    Vtx[2] = 0;
+
+    Mtl = 0;
+}
+
 bool Triangle::Intersect(const Ray &ray, Intersection &hit) const
 {
 
