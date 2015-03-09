@@ -7,7 +7,10 @@
 
 #include "Vector3.h"
 #include "Color.h"
+#include "Object.h"
+
 class Material;
+class Object;
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -24,7 +27,6 @@ public:
 
 	// Shaded color
 	Color Shade;
-
 
 	//obj
 	Object *Obj;

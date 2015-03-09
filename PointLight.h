@@ -16,7 +16,7 @@ class PointLight: public Light
 	    toLight.Normalize();
 
 	    col = BaseColor;
-	    ltpos = Position;
+	    ltPos = Position;
 
 	    return bright;
 	}
@@ -30,3 +30,5 @@ class PointLight: public Light
     private:
 	Vector3 Position;
 };
+
+#endif
