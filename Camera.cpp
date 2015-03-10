@@ -1,4 +1,7 @@
-#include <Camera2/Camera.h>
+#include <Camera.h>
+
+Vector3 CX, CY;
+float CW, CH;
 
 Camera::Camera()
 {
@@ -30,74 +33,49 @@ void Camera::LookAt(const Vector3 &pos, const Vector3 &target, const Vector3 &up
 	WorldMatrix.b.Cross(WorldMatrix.c, WorldMatrix.a);
 }
 
-void Camera::Render(Scene &s) {
+void Camera::Render(const Scene &s) {
 
-	//create the corners of the rendering window:
+    CX.Cross(-WorldMatrix.c, WorldMatrix.b);
+    CY.Cross(CX, -WorldMatrix.c);
 
-	//calculate modifiedB
-	Vector3 modifiedB = WorldMatrix.b;
-	modifiedB.Scale(tan(VerticalFOV / 2));
-	Vector3 modifiedA = WorldMatrix.a;
-	//calculate hfov and modifiedB
-	float hfov = 2 * atan(Aspect * tan((VerticalFOV / 2)));
-	modifiedA.Scale(tan(hfov / 2));
+    CW = 2.0f * tanf(VerticalFOV/ 2);
+    CH = CW / Aspect;
 
-	topLeft = WorldMatrix.d - WorldMatrix.c + modifiedB - modifiedA;
-	//topLeft.Print("upleft");
-	topRight = WorldMatrix.d - WorldMatrix.c + modifiedB + modifiedA;
-	//topRight.Print("upright");
-	bottomLeft = WorldMatrix.d - WorldMatrix.c - modifiedB - modifiedA;
-	//bottomLeft.Print("downleft");
-	bottomRight = WorldMatrix.d - WorldMatrix.c - modifiedB + modifiedA;
-	//bottomRight.Print("downright");
-	right = (topRight - topLeft);
-	rightDelta = right.Magnitude() / XRes;
-	right.Normalize();
-	up = (topLeft - bottomLeft);
-	downDelta = up.Magnitude() / YRes;
-	up.Normalize();
-
-	for (int y = 0; y < YRes; ++y) {
-		for (int x = 0; x < XRes; ++x) {
-			RenderPixel(x, y, s);
-		}
-	}
+    for (int y = 0; y < YRes; ++y) {
+	    for (int x = 0; x < XRes; ++x) {
+		    RenderPixel(s, x, y);
+	    }
+    }
 }
-void Camera::SaveBitmap(char *filename) {
+void Camera::SaveBitmap(const char *filename) {
 	BMP->SaveBMP(filename);
 }
 
-void Camera::RenderPixel(int x, int y, Scene &s) {
-	Ray sentRay;
-	sentRay.Origin = WorldMatrix.d;
-	
-	//compute ray direction:
-	sentRay.Direction = bottomLeft;
-	sentRay.Direction.AddScaled(right, (x + 0.5) * rightDelta);
-	sentRay.Direction.AddScaled(up, (y + 0.5) * downDelta);
+void Camera::RenderPixel(const Scene &s, int x, int y) 
+{
+    Ray ray;
+    ray.Origin = WorldMatrix.d;
+    ray.Direction = -WorldMatrix.c / Aspect + (((float)x)/XRes - 0.5) * CW * CX + 
+				     (((float)y)/YRes - 0.5) * CH * CY;
+    ray.Direction.Normalize();
+    Intersection hit;
 
-	sentRay.Direction = sentRay.Direction - WorldMatrix.d;
-	sentRay.Direction.Normalize();
+    if (!s.Intersect(ray, hit)) {
+	    //no hits so skycolor:
+	    BMP->SetPixel(x, y, s.GetSkyColor().ToInt());
+    }
+    else {
+	    Color color = Color::BLACK;
+	    for (UINT i = 0; i < s.GetNumLights(); ++i) {
+		    //compute lighting with this light 
+		    Vector3 toLight, ltPos;
+		    float intensity = s.GetLight(i).Illuminate(hit.Position, hit.Shade, toLight, ltPos);
+		    float dotResult = Max(0.0f, (toLight).Dot(hit.Normal));
 
-	Intersection hit;
-	if (!s.Intersect(sentRay, hit)) {
-		//no hits so skycolor:
-		BMP->SetPixel(x, y, s.GetSkyColor().ToInt());
-	}
-	else {
-		Color newColor = Color(0.0,0.0,0.0);
-		for (int i = 0; i < s.GetNumLights(); ++i) {
-			//compute lighting with this light 
-			Color lightColor, C;
-			Vector3 toLight, ItPos, in, out;
-			float intensity = s.GetLight(i).Illuminate(hit.Position, lightColor, toLight, ItPos);
-			C = lightColor;
-			float dotResult = (toLight).Dot(hit.Normal);
-			C.Scale(((dotResult < 0) ? 0 : dotResult) * intensity);
-
-			//add this lighting to the pixel
-			newColor.Add(C);
-		}
-		BMP->SetPixel(x, y, newColor.ToInt());
-	}
+		    hit.Shade.Scale(intensity * dotResult);
+		    //add this lighting to the pixel
+		    color.Add(hit.Shade);
+	    }
+	    BMP->SetPixel(x, y, color.ToInt());
+    }
 }

@@ -22,9 +22,9 @@ public:
 	void SetResolution(int x, int y);
 	void LookAt(const Vector3 &pos, const Vector3 &target, const Vector3 &up = Vector3::YAXIS);
 
-	void Render(Scene &s);
-	void SaveBitmap(char *filename);
-	void RenderPixel(int x, int y, Scene &s);
+	void Render(const Scene &s);
+	void SaveBitmap(const char *filename);
+	void RenderPixel(const Scene &s, int x, int y);
 
 
 private:
@@ -34,9 +34,6 @@ private:
 	float VerticalFOV;
 	float Aspect;
 	Bitmap *BMP;
-	Vector3 topLeft, topRight, bottomLeft, bottomRight, right, up;
-	float rightDelta;
-	float downDelta;
 };
 
 #endif
