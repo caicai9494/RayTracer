@@ -6,7 +6,7 @@
 #define CSE168_MESHOBJECT_H
 
 #include <Object/MeshObject.h>
-#include <Triangle.h>
+#include <Object/Triangle.h>
 #include <Material/LambertMaterial.h>
 #include <Core/Matrix34.h>
 
