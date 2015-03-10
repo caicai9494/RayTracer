@@ -24,8 +24,6 @@ class Camera{
 	void Render(const Scene &s);
 	void SaveBitmap(const char* path);
 
-	float GetHorizontalFOV();
-
     private:
 	Matrix34 WorldMatrix;
 	UINT XRes, YRes;

@@ -4,6 +4,10 @@
 
 #include <Camera.h>
 #include <Intersection.h>
+
+Vector3 CX, CY;
+float CW, CH;
+
 Camera::Camera()
 {
     BMP = 0;
@@ -39,13 +43,9 @@ void Camera::SetResolution(int w, int h)
 }
 void Camera::SetFOV(float angle)
 {
-    VerticalFOV = angle;
+    VerticalFOV = angle / 180 * PI;
 }
 
-float Camera::GetHorizontalFOV()
-{
-    return 2 * atan(Aspect * tan(VerticalFOV / 2));
-}
 
 void Camera::SetAspect(float asp)
 {
@@ -54,31 +54,31 @@ void Camera::SetAspect(float asp)
 
 void Camera::RenderPixel(const Scene &s, int x, int y)
 {
+    Intersection intrs;
+
     Ray ray;
     ray.Origin = Position;
 
-    Vector3 dir;
-    Intersection intrs;
-
-    dir.x = x;
-    dir.y = y;
-    dir.z = 0;
-    dir = dir - ray.Origin;
-    dir.Normalize();
-
-    //WorldMatrix.Transform(ray.Origin, ray.Origin);
-    //WorldMatrix.Transform(ray.Origin, ray.Origin);
-    ray.Direction = dir;
-
+    ray.Direction = -WorldMatrix.c + 
+	           (static_cast<float>(x) / XRes - 0.5f) * CW * CX +
+	           (static_cast<float>(y) / YRes - 0.5f) * CH * CY;
+    ray.Direction.Normalize();
+    
     if(s.Intersect(ray, intrs))
     {
+	Color color = Color::WHITE;
 	for(UINT k = 0; k < s.GetNumLights(); k++)
 	{
-	    Vector3 lsPos, lsDir;
-	    float iten = s.GetLight(k).Illuminate(intrs.Position, intrs.Shade, lsPos, lsDir);
-	    iten++;
+	    Vector3 toLight, ltPos;
+	    float iten = s.GetLight(k).Illuminate(intrs.Position, intrs.Shade, toLight, ltPos);
+
+	    float lightDot = toLight.Dot(intrs.Normal);
+	    if(lightDot > 0)
+		intrs.Shade.Scale(lightDot * iten);
+
+	    color.Add(intrs.Shade);
 	}
-	BMP->SetPixel(x, y, intrs.Shade.ToInt());
+	BMP->SetPixel(x, y, color.ToInt());
     }
     else
 	BMP->SetPixel(x, y, s.GetSkyColor().ToInt());
@@ -88,17 +88,17 @@ void Camera::Render(const Scene &s)
 {
     BMP = new Bitmap(XRes, YRes);
 
-    float r = XRes / 2.0;
-    float l = -r;
+    CX.Cross(-WorldMatrix.c, WorldMatrix.b);
+    CY.Cross(CX, -WorldMatrix.c);
 
-    float t = YRes / 2.0;
-    float b = -t;
+    CW = 2.0f * tan(VerticalFOV / 2.0f);
+    CH = CW / Aspect;
 
-    for(UINT i = 0; i < XRes - 1; i++)
+    for(UINT i = 0; i < XRes; i++)
     {
-	for(UINT j = 0; j < YRes - 1; j++)
+	for(UINT j = 0; j < YRes; j++)
 	{
-	    RenderPixel(s, l + i, b + j);
+	    RenderPixel(s, i, j);
 	}
     }
 }
