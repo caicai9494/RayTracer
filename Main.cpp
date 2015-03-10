@@ -8,6 +8,7 @@
 #include <Light/PointLight.h>
 #include <Light/DirectLight.h>
 #include <Scene.h>
+
 void project1();
 
 ////////////////////////////////////////////////////////////////////////////////

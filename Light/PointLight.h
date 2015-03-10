@@ -10,7 +10,7 @@
 class PointLight: public Light
 {
     public:
-	PointLight(){}
+	PointLight(): Light(){}
 	float Illuminate(const Vector3 &pos, Color &col, Vector3 &toLight, Vector3 &ltPos)
 	{
 	    toLight = Position - pos;

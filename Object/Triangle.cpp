@@ -1,5 +1,7 @@
 #include "Triangle.h"
 
+static const double IGNORE = 1E-5;
+
 Triangle::Triangle()
 {
     Vtx[0] = 0;
@@ -9,9 +11,8 @@ Triangle::Triangle()
     Mtl = 0;
 }
 
-bool Triangle::Intersect(const Ray &ray, Intersection &hit) const
+bool Triangle::Intersect(const Ray &ray, Intersection &hit) 
 {
-
     float t, alpha, beta, D;
     Vertex *a, *b, *c;
     Vector3 p, d; 
@@ -22,7 +23,9 @@ bool Triangle::Intersect(const Ray &ray, Intersection &hit) const
     b = Vtx[1];
     c = Vtx[2];
 
+    p = ray.Origin;
     d = ray.Direction;
+
     b_a = b->Position - a->Position;
     c_a = c->Position - a->Position;
     p_a = p - a->Position;
@@ -30,30 +33,32 @@ bool Triangle::Intersect(const Ray &ray, Intersection &hit) const
     b_axc_a.Cross(b_a, c_a);
 
     D = -d.Dot(b_axc_a);
+    
+    if(D == 0.0) return false;
 
-    if(abs(D) > 0)
-    {
-	p = ray.Origin;
-	t = (p - a->Position).Dot(b_axc_a) / D;
+    p = ray.Origin;
+    t = (p - a->Position).Dot(b_axc_a) / D;
+    if(t < 0 || t > hit.HitDistance)
+	return false;
 
-	p_axc_a.Cross(p_a , c_a);
-	alpha = -d.Dot(p_axc_a) / D;
+    p_axc_a.Cross(p_a , c_a);
+    alpha = -d.Dot(p_axc_a) / D;
+    if(alpha < 0 || alpha > 1) 
+	return false;
 
-	b_axp_a.Cross(b_a, p_a);
-	beta = -d.Dot(b_axp_a) / D;
+    b_axp_a.Cross(b_a, p_a);
+    beta = -d.Dot(b_axp_a) / D;
+    if(beta < 0 || beta > 1 || alpha + beta > 1) 
+	return false;
 
-	if(alpha > 0 && beta > 0 && alpha + beta < 1 && t > 0)
-	{
-	    hit.Position = a->Position + alpha * b_a + beta * c_a;
-	    hit.HitDistance = ray.Origin.Distance(hit.Position);
-	    hit.Normal = b_axc_a;
-	    hit.Normal.Normalize();
+    hit.Position = a->Position + t * ray.Direction;
+    hit.HitDistance = t;
+    hit.Mtl = Mtl;
+    
+    hit.Normal = (1 - beta - alpha) * a->Normal + 
+		 alpha * b->Normal + 
+		 beta * c->Normal;
+    hit.Normal.Normalize();
+    return true;
 
-	    return true;
-	}
-	else 
-	    return false;
-    }
-
-    return false;
 }

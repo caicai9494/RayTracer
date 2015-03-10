@@ -2,12 +2,12 @@
 // Main.cpp
 ////////////////////////////////////////
 
-#include "MeshObject.h"
-#include "InstanceObject.h"
-#include "Camera.h"
-#include "PointLight.h"
-#include "DirectLight.h"
-#include "Scene.h"
+#include <Object/MeshObject.h>
+#include <Object/InstanceObject.h>
+#include <Camera.h>
+#include <Light/PointLight.h>
+#include <Light/DirectLight.h>
+#include <Scene.h>
 void project1();
 
 ////////////////////////////////////////////////////////////////////////////////

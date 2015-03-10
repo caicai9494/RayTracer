@@ -14,8 +14,12 @@ class Intersection;
 
 class Object {
 public:
-	virtual ~Object()	{}
-	virtual bool Intersect(const Ray &ray, Intersection &hit)const {};
+        Object(){}
+	virtual ~Object(){}
+	virtual bool Intersect(const Ray &ray, Intersection &hit)const 
+	{
+	    return false;
+	}
 };
 
 ////////////////////////////////////////////////////////////////////////////////

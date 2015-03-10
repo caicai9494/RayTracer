@@ -15,6 +15,7 @@ class DirectLight : public Light
 	void SetDirection(const Vector3 &v)
 	{
 	    Direction = v;
+	    Direction.Normalize();
 	}
 
 	float Illuminate(const Vector3 &pos, Color &col, Vector3 &toLight, Vector3 &ltPos)

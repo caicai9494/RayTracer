@@ -17,7 +17,7 @@ public:
 	MeshObject();
 	~MeshObject();
 
-	bool Intersect(const Ray &ray,Intersection &hit);
+	bool Intersect(const Ray &ray,Intersection &hit)const;
 
 	void MakeBox(float x,float y,float z,Material *mtl=0);
 
