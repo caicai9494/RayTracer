@@ -1,0 +1,28 @@
+////////////////////////////////////////
+// PlanceObject.h
+////////////////////////////////////////
+
+#ifndef CSE168_PLANEOBJECT_H
+#define CSE168_PLANEOBJECT_H
+
+#include <Object/Object.h>
+#include <Material/LambertMaterial.h>
+#include <Core/Matrix34.h>
+
+////////////////////////////////////////////////////////////////////////////////
+//
+class PlaneObject:public Object {
+public:
+	PlaneObject();
+	~PlaneObject();
+
+	bool Intersect(const Ray &ray,Intersection &hit)const;
+
+private:
+	Vector3 Normal;
+	Vector3 Point;
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+#endif

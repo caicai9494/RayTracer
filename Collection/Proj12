@@ -3,25 +3,18 @@
 ////////////////////////////////////////
 
 #include <Object/MeshObject.h>
-#include <Object/PlaneObject.h>
-#include <Object/SphereObject.h>
 #include <Object/InstanceObject.h>
 #include <Camera.h>
 #include <Light/PointLight.h>
 #include <Light/DirectLight.h>
 #include <Scene.h>
-#include <stdio.h>
-#include <time.h>
 
 void project1();
-void Sphere();
 
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc,char **argv) {
-
-        srand(time(NULL));
-	Sphere();
+	project1();
 	return 0;
 }
 
@@ -79,41 +72,3 @@ void project1() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
-void Sphere()
-{ 
-    Scene scn;
-    scn.SetSkyColor(Color(0.8f, 0.8f, 1.0f));
-    // Create ground plane
-    PlaneObject ground;
-    scn.AddObject(ground);
-
-    // Create spheres
-    for(int i=0;i<10;i++) {
-    SphereObject *sphere=new SphereObject;
-    float rad=RangeRand(0.25f,0.5f);
-    Vector3 pos(RangeRand(-0.0f,5.0f),rad,RangeRand(-0.0f,5.0f));
-    sphere->SetRadius(rad);
-    sphere->SetCenter(pos);
-    scn.AddObject(*sphere);
-    }
-
-    // Create lights
-    DirectLight sunlgt;
-    sunlgt.SetBaseColor(Color(1.0f, 1.0f, 0.9f));
-    
-    sunlgt.SetIntensity(1.0f);
-    sunlgt.SetDirection(Vector3(2.0f, -3.0f, -2.0f));
-    scn.AddLight(sunlgt);
-
-    // Create camera
-    Camera cam;
-    cam.LookAt(Vector3(-0.75f,0.25f,5.0f),Vector3(0.0f,0.5f,0.0f));
-    cam.SetFOV(40.0f);
-    cam.SetAspect(1.33f);
-    cam.SetResolution(800,600);
-    // Render image
-    cam.Render(scn);
-    cam.SaveBitmap("spheres.bmp");
-
-}

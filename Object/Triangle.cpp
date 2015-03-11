@@ -1,6 +1,4 @@
-#include "Triangle.h"
-
-static const double IGNORE = 1E-5;
+#include <Object/Triangle.h>
 
 Triangle::Triangle()
 {

@@ -1,6 +1,6 @@
 CC=g++
-CPPFLAGS=-c -Wall -g -I ~/Mooc/computer_graphics/raytracer/proj1 -O
-OBJ= Core/Bitmap.o Core/Color.o Main.o Core/Matrix34.o Object/MeshObject.o Core/Vector3.o Object/InstanceObject.o Camera.o Object/Triangle.o Scene.o
+CPPFLAGS=-c -Wall -g -I ~/Mooc/computer_graphics/raytracer/proj1 
+OBJ= Core/Bitmap.o Core/Color.o Main.o Core/Matrix34.o Object/MeshObject.o Core/Vector3.o Object/InstanceObject.o Camera.o Object/Triangle.o Object/PlaneObject.o Scene.o Object/SphereObject.o
 TARGET= raytracer
 	
 all: 	$(OBJ)

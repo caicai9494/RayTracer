@@ -12,10 +12,16 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <ctime>
 
 #define PI	3.14159265f
 
+
 typedef unsigned int UINT;
+inline float RangeRand(float lower, float up)
+{
+    return float(rand())/RAND_MAX * (up - lower) + lower;
+}
 
 inline int Min(int a,int b)					{return a<b ? a : b;}
 inline float Min(float a,float b)			{return a<b ? a : b;}
