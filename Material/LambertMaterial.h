@@ -11,9 +11,11 @@
 
 class LambertMaterial:public Material {
 public:
-	void ComputeReflectance(Color &col, const Vector3 &in, const Vector3 &out, const Intersection &hit) {
-		col.Scale(DiffuseColor,1.0f/PI);
-	}
+
+    LambertMaterial();
+    ~LambertMaterial();
+    void ComputeReflectance(Color &col, const Vector3 &in, const Vector3 &out, const Intersection &hit);
+    void SetColor(const Color& color);
 
 private:
 	Color DiffuseColor;

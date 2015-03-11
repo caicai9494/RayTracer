@@ -8,11 +8,13 @@
 #include <Core/Vector3.h>
 #include <Core/Bitmap.h>
 #include <Scene.h>
+#include <RayTrace.h>
 #include <Material/Material.h>
 #include <iostream>
 
 class Camera
 {
+    friend class RayTrace;
 public:
 	Camera();
 	~Camera();

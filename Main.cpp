@@ -21,7 +21,8 @@ void Sphere();
 int main(int argc,char **argv) {
 
         srand(time(NULL));
-	Sphere();
+	//Sphere();
+	project1();
 	return 0;
 }
 
@@ -32,9 +33,12 @@ void project1() {
 	Scene scn;
 	scn.SetSkyColor(Color(0.8f, 0.9f, 1.0f));
 
+	// Create Material
+	LambertMaterial blueMaterial;
+	blueMaterial.SetColor(Color::BLUE);
 	// Create boxes
 	MeshObject box1;
-	box1.MakeBox(5.0f,0.1f,5.0f);
+	box1.MakeBox(5.0f,0.1f,5.0f, &blueMaterial);
 	scn.AddObject(box1);
 
 	MeshObject box2;

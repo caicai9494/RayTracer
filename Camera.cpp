@@ -1,7 +1,7 @@
 #include <Camera.h>
 
-Vector3 CX, CY;
-float CW, CH;
+static Vector3 CX, CY;
+static float CW, CH;
 
 Camera::Camera()
 {
@@ -41,6 +41,7 @@ void Camera::Render(const Scene &s) {
     CW = 2.0f * tanf(VerticalFOV/ 2);
     CH = CW / Aspect;
 
+
     for (int y = 0; y < YRes; ++y) {
 	    for (int x = 0; x < XRes; ++x) {
 		    RenderPixel(s, x, y);
@@ -60,22 +61,7 @@ void Camera::RenderPixel(const Scene &s, int x, int y)
     ray.Direction.Normalize();
     Intersection hit;
 
-    if (!s.Intersect(ray, hit)) {
-	    //no hits so skycolor:
-	    BMP->SetPixel(x, y, s.GetSkyColor().ToInt());
-    }
-    else {
-	    Color color = Color::BLACK;
-	    for (UINT i = 0; i < s.GetNumLights(); ++i) {
-		    //compute lighting with this light 
-		    Vector3 toLight, ltPos;
-		    float intensity = s.GetLight(i).Illuminate(hit.Position, hit.Shade, toLight, ltPos);
-		    float dotResult = Max(0.0f, (toLight).Dot(hit.Normal));
-
-		    hit.Shade.Scale(intensity * dotResult);
-		    //add this lighting to the pixel
-		    color.Add(hit.Shade);
-	    }
-	    BMP->SetPixel(x, y, color.ToInt());
-    }
+    RayTrace rayTrace(s);
+    rayTrace.TraceRay(ray, hit);
+    BMP->SetPixel(x, y, hit.Shade.ToInt());
 }
