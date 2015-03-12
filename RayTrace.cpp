@@ -33,10 +33,9 @@ bool RayTrace::TraceRay(const Ray &ray, Intersection &hit, int depth)
 	float coeff = intensity * dotProduct;
 	if(coeff > 0)
 	{
-	        temp.Scale(coeff);
+	        //temp.Scale(coeff);
 	        //add this lighting to the pixel
-	        hit.Shade.Add(temp);
-	    /*
+	        //hit.Shade.Add(temp);
 	    Intersection shadowHit;
 
 	    Ray shadowRay;
@@ -57,7 +56,6 @@ bool RayTrace::TraceRay(const Ray &ray, Intersection &hit, int depth)
 	        //add this lighting to the pixel
 	        hit.Shade.Add(temp);
 	    }
-	    */
 	}
     }
 

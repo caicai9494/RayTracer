@@ -19,7 +19,7 @@ void InstanceObject::SetMatrix(const Matrix34 &mtx)
     InverseMatrix.Inverse();
 }
 
-bool InstanceObject::Intersect(const Ray &ray, Intersection &hit) const
+bool InstanceObject::Intersect(const Ray &ray, Intersection &hit)
 {
     Ray ray2;
     InverseMatrix.Transform(ray.Origin, ray2.Origin);

@@ -12,7 +12,7 @@ void SphereObject::SetCenter(const Vector3 &c)
     Center = c;
 }
 
-bool SphereObject::Intersect(const Ray &ray,Intersection &hit)const
+bool SphereObject::Intersect(const Ray &ray,Intersection &hit)
 {
     Vector3 P,D;
     P = ray.Origin;

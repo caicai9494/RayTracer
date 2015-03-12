@@ -33,7 +33,7 @@ void Camera::LookAt(const Vector3 &pos, const Vector3 &target, const Vector3 &up
 	WorldMatrix.b.Cross(WorldMatrix.c, WorldMatrix.a);
 }
 
-void Camera::Render(const Scene &s) {
+void Camera::Render(Scene &s) {
 
     CX.Cross(-WorldMatrix.c, WorldMatrix.b);
     CY.Cross(CX, -WorldMatrix.c);
@@ -58,7 +58,7 @@ void Camera::SaveBitmap(const char *filename) {
 	BMP->SaveBMP(filename);
 }
 
-void Camera::RenderPixel(const Scene &s, int x, int y) 
+void Camera::RenderPixel(Scene &s, int x, int y) 
 {
     Ray ray;
     ray.Origin = WorldMatrix.d;

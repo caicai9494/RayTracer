@@ -16,7 +16,7 @@ public:
 	SphereObject();
 	~SphereObject();
 
-	bool Intersect(const Ray &ray,Intersection &hit)const;
+	bool Intersect(const Ray &ray,Intersection &hit);
 
 	void SetRadius(float r);
 	void SetCenter(const Vector3 &c);

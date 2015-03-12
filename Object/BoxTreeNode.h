@@ -21,8 +21,8 @@ public:
 	~BoxTreeNode();
 
 
-	bool Intersect(const Ray &ray, Intersection &hit)const ;
-	bool IntersectVolume(const Ray &ray, float &t)const ;
+	bool Intersect(const Ray &ray, Intersection &hit);
+	bool IntersectVolume(const Ray &ray, float &t);
 	void Construct(int count, Triangle** tri);
 
 	int GetNumTriangles();

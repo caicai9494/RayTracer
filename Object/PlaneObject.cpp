@@ -4,7 +4,7 @@
 PlaneObject::PlaneObject(): Normal(Vector3::YAXIS), Point(Vector3::ORIGIN){}
 PlaneObject::~PlaneObject(){}
 
-bool PlaneObject::Intersect(const Ray &ray,Intersection &hit)const
+bool PlaneObject::Intersect(const Ray &ray,Intersection &hit)
 {
     float denominator = Normal.Dot(ray.Direction);
     if(denominator == 0) return false;

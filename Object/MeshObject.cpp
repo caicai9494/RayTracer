@@ -23,7 +23,8 @@ MeshObject::~MeshObject() {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-bool MeshObject::Intersect(const Ray &ray, Intersection &hit) const{
+bool MeshObject::Intersect(const Ray &ray, Intersection &hit) 
+{
 	bool success=false;
 	for(int i=0;i<NumTriangles;i++)
 		if(Triangles[i].Intersect(ray,hit)) success=true;

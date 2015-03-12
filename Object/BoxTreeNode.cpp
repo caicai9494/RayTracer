@@ -7,8 +7,40 @@ BoxTreeNode::BoxTreeNode(): Child1(0), Child2(0), NumTriangles(0)
 {
 }
 
-bool BoxTreeNode::IntersectVolume(const Ray &ray, float &t)const 
+/*
+bool BoxTreeNode::IntersectVolume(const Ray &ray, float &t) {
+
+	//get test t values for x, y, z (0,1,2)
+	float t1[3], t2[3], tmin, tmax;
+	for (int i = 0; i < 3; ++i) {
+		t1[i] = ((BoxMin[i] - ray.Origin[i]) / ray.Direction[i]);
+		t2[i] = ((BoxMax[i] - ray.Origin[i]) / ray.Direction[i]);
+	}
+	tmin = Max(Min(t1[0], t2[0]), Min(t1[1], t2[1]), Min(t1[2], t2[2]));
+	tmax = Min(Max(t1[0], t2[0]), Max(t1[1], t2[1]), Max(t1[2], t2[2]));
+
+	if (tmin <= tmax) {
+		t = tmin;
+		return true;
+	}
+	else if (tmin < 0) {
+		t = tmin;
+		return true;
+	}
+	//tmax < 0
+	return false;
+}
+*/
+bool BoxTreeNode::IntersectVolume(const Ray &ray, float &t)
 {
+	float t1[3], t2[3], tmin, tmax;
+	for (int i = 0; i < 3; ++i) {
+		t1[i] = ((BoxMin[i] - ray.Origin[i]) / ray.Direction[i]);
+		t2[i] = ((BoxMax[i] - ray.Origin[i]) / ray.Direction[i]);
+	}
+	tmin = Max(Min(t1[0], t2[0]), Min(t1[1], t2[1]), Min(t1[2], t2[2]));
+	tmax = Min(Max(t1[0], t2[0]), Max(t1[1], t2[1]), Max(t1[2], t2[2]));
+	/*
     Vector3 t1, t2;
     t1 = BoxMin - ray.Origin;
     t2 = BoxMax - ray.Origin;
@@ -23,9 +55,8 @@ bool BoxTreeNode::IntersectVolume(const Ray &ray, float &t)const
 
     float tmin = Max((Min(t1.x, t2.x), Min(t1.y, t2.y)), Min(t1.z, t2.z));
     float tmax = Min((Max(t1.x, t2.x), Max(t1.y, t2.y)), Max(t1.z, t2.z));
+    */
 
-    if(tmin < RAYOFFSET) 
-	return false;
     if(tmin <= tmax)
     {
 	t = tmin;
@@ -36,14 +67,16 @@ bool BoxTreeNode::IntersectVolume(const Ray &ray, float &t)const
     return false;
 }
 
-bool BoxTreeNode::Intersect(const Ray &ray, Intersection &hit)const 
+bool BoxTreeNode::Intersect(const Ray &ray, Intersection &hit)
 {
 	//cout << NumTriangles<<" debug\n";
-    if(IsLeaf() && NumTriangles < MaxTrianglesPerBox && NumTriangles > 0)
+    if(IsLeaf() && NumTriangles <= MaxTrianglesPerBox && NumTriangles > 0)
     {
 	bool success = false;
-	for(int i = 0; i < NumTriangles; i++)
-	    success = Tri[i]->Intersect(ray, hit);
+	for(int i = 0; i < NumTriangles; ++i)
+	    //success = Tri[i]->Intersect(ray, hit);
+	    if(Tri[i]->Intersect(ray, hit))
+		success = true;
 	return success;
     }
 

@@ -179,7 +179,7 @@ void project2()
      cam.LookAt(Vector3(-0.1f,0.1f,0.2f),Vector3(-0.05f,0.12f,0.0f));
      cam.SetFOV(40.0f);
      cam.SetAspect(1.33f);
-     cam.SetResolution(300,240);
+     cam.SetResolution(1600,1200);
       //Render image
      Watch::StartTimer();
      cam.Render(scn);

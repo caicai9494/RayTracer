@@ -30,7 +30,7 @@ void BoxTreeObject::Construct(MeshObject &obj)
     RootNode = new BoxTreeNode;
     RootNode->Construct(obj.NumTriangles, triangles);
 }
-bool BoxTreeObject::Intersect(const Ray &ray, Intersection &hit)const 
+bool BoxTreeObject::Intersect(const Ray &ray, Intersection &hit)
 {
     bool success = false;
     float t;

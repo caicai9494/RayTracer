@@ -24,31 +24,19 @@ inline float RangeRand(float lower, float up)
 {
     return float(rand())/RAND_MAX * (up - lower) + lower;
 }
-template<typename T>
-inline T Max(T a, T b, T c)
-{
-    if(a >= b && a >= c)
-	return a;
-    else if(b > a && b > c)
-	return b;
-    else 
-	return c;
-}
 
-template<typename T>
-inline T Min(T a, T b, T c)
+inline float Min(float a,float b)			{return a<b ? a : b;}
+inline float Min(float a, float b, float c)
 {
-    if(a <= b && a <= c)
-	return a;
-    else if(b < a && b < c)
-	return b;
-    else 
-	return c;
+    return Min(Min(a,b), c);
 }
 inline int Min(int a,int b)					{return a<b ? a : b;}
-inline float Min(float a,float b)			{return a<b ? a : b;}
 inline int Max(int a,int b)					{return a>b ? a : b;}
 inline float Max(float a,float b)			{return a>b ? a : b;}
+inline float Max(float a, float b, float c)
+{
+    return Max(Max(a,b), c);
+}
 inline int Clamp(int x,int a,int b)			{if(x<a) return a; if(x>b) return b; return x;}
 inline float Clamp(float x,float a,float b)	{if(x<a) return a; if(x>b) return b; return x;}
 

@@ -15,7 +15,7 @@ class InstanceObject: public Object
     public:
 	InstanceObject(Object &obj);
 
-	bool Intersect(const Ray &ray, Intersection &hit) const;
+	bool Intersect(const Ray &ray, Intersection &hit);
 	void SetChild(Object &obj);
 	void SetMatrix(const Matrix34 &mtx);
 

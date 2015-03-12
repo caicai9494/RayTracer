@@ -16,7 +16,7 @@ public:
 	PlaneObject();
 	~PlaneObject();
 
-	bool Intersect(const Ray &ray,Intersection &hit)const;
+	bool Intersect(const Ray &ray,Intersection &hit);
 
 private:
 	Vector3 Normal;

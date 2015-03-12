@@ -23,9 +23,9 @@ public:
 	void SetResolution(int x, int y);
 	void LookAt(const Vector3 &pos, const Vector3 &target, const Vector3 &up = Vector3::YAXIS);
 
-	void Render(const Scene &s);
+	void Render(Scene &s);
 	void SaveBitmap(const char *filename);
-	void RenderPixel(const Scene &s, int x, int y);
+	void RenderPixel(Scene &s, int x, int y);
 
 
 private:
