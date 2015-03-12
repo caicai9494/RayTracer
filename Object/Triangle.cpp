@@ -50,7 +50,7 @@ bool Triangle::Intersect(const Ray &ray, Intersection &hit)
     float t;
     p = ray.Origin;
     t = (p - pa).Dot(b_axc_a) / D;
-    if(t < 0 || t >= hit.HitDistance)
+    if(t < RAYOFFSET || t >= hit.HitDistance)
 	return false;
 
     hit.Position = p + t * ray.Direction;

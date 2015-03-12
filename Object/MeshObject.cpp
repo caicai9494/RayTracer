@@ -116,3 +116,115 @@ void MeshObject::MakeBox(float x,float y,float z,Material *mtl) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+bool MeshObject::LoadPLY(const char *path, Material *mtl)
+{
+    /*
+    using namespace std;
+    fstream fs(path, fstream::in);
+    */
+    //Open file
+    FILE *f=fopen(path,"r");
+    if(f==0) {
+     printf("ERROR: MeshObject::LoadPLY()- Can't open '%s'\n",path);
+     return false;
+     }
+      //Read header
+     char tmp[256];
+     int numverts=0,numtris=0;
+     int posprop=-99,normprop=-99;
+     int props=0;
+     while(1) {
+
+	 fgets(tmp,256,f);
+	 if(strncmp(tmp,"element vertex",14)==0)
+	     numverts=atoi(&tmp[14]);
+	 if(strncmp(tmp,"element face",12)==0)
+	     numtris=atoi(&tmp[12]);
+	 if(strncmp(tmp,"property",8)==0) {
+	 int len=strlen(tmp);
+	 if(strncmp(&tmp[len-3]," x",2)==0) posprop=props;
+	 if(strncmp(&tmp[len-3],"nx",2)==0) normprop=props;
+	 props++;
+	 }
+	 if(strcmp(tmp,"end_header\n")==0) break;
+
+     }
+     if(posprop==-1) {
+     printf("ERROR: MeshObject::LoadPLY()- No vertex positions found\n");
+     fclose(f);
+     return false;
+     }
+     // Read verts
+     int i=0;
+     if(numverts>0) {
+     NumVertexes=numverts;
+     Vertexes=new Vertex[NumVertexes];
+     for(i=0;i<NumVertexes;i++) {
+     fgets(tmp,256,f);
+     char *pch=strtok(tmp," ");
+     int prop=0;
+     while(pch) {
+     if(prop==posprop) Vertexes[i].Position.x=float(atof(pch));
+     if(prop==posprop+1) Vertexes[i].Position.y=float(atof(pch));
+     if(prop==posprop+2) Vertexes[i].Position.z=float(atof(pch));
+     if(prop==normprop) Vertexes[i].Normal.x=float(atof(pch));
+     if(prop==normprop+1) Vertexes[i].Normal.y=float(atof(pch));
+     if(prop==normprop+2) Vertexes[i].Normal.z=float(atof(pch));
+     pch=strtok(0," ");
+     prop++;
+     }
+     }
+     }
+      //Read tris
+     if(numtris>0) {
+     if(mtl==0) mtl=new LambertMaterial;
+     NumTriangles=numtris;
+     Triangles=new Triangle[numtris];
+     for(i=0;i<numtris;i++) {
+     int count,i0,i1,i2;
+     fscanf(f,"%d %d %d %d\n",&count,&i0,&i1,&i2);
+     if(count!=3) {
+     printf("ERROR: MeshObject::LoadPLY()- Only triangles are  supported\n");
+     fclose(f);
+     return false;
+     }
+     Triangles[i].Init(&Vertexes[i0],&Vertexes[i1],&Vertexes[i2],mtl);
+     }
+     }
+     // Smooth
+     if(normprop<0) Smooth();
+     // Close file
+     fclose(f);
+     printf("Loaded %d triangles from file '%s'\n",numtris,path);
+     return true;
+     }
+
+void MeshObject::Smooth() {
+
+     int i,j;
+     for(i=0;i<NumVertexes;i++)
+     Vertexes[i].Normal.Zero();
+     for(i=0;i<NumTriangles;i++) {
+     Triangle &tri=Triangles[i];
+     Vector3 e1=tri.Vtx[1]->Position-tri.Vtx[0]->Position;
+     Vector3 e2=tri.Vtx[2]->Position-tri.Vtx[0]->Position;
+     Vector3 cross;
+     cross.Cross(e1,e2);
+     for(j=0;j<3;j++)
+     tri.Vtx[j]->Normal.Add(cross);
+     }
+     for(i=0;i<NumVertexes;i++)
+     Vertexes[i].Normal.Normalize();
+}
+
+
+/*
+int MeshObject::GetNumTriangles()
+{
+    return NumTriangles;
+}
+int MeshObject::GetNumVertexes()
+{
+    return NumVertexes;
+}
+*/

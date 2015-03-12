@@ -14,7 +14,6 @@
 
 class Camera
 {
-    friend class RayTrace;
 public:
 	Camera();
 	~Camera();

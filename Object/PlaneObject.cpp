@@ -11,7 +11,7 @@ bool PlaneObject::Intersect(const Ray &ray,Intersection &hit)const
 
     float t;
     t = (Normal.Dot(Point) - Normal.Dot(ray.Origin)) / denominator;
-    if(t < 0 || t >= hit.HitDistance) return false;
+    if(t < RAYOFFSET || t >= hit.HitDistance) return false;
 
     hit.Normal = Normal;
     hit.HitDistance = t;

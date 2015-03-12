@@ -41,10 +41,10 @@ void Camera::Render(const Scene &s) {
     CW = 2.0f * tanf(VerticalFOV/ 2);
     CH = CW / Aspect;
 
-
     for (int y = 0; y < YRes; ++y) {
 	    for (int x = 0; x < XRes; ++x) {
 		    RenderPixel(s, x, y);
+		    //std::cout << "Working! " << (y * YRes + XRes) / (float)total_pixel << std::endl;
 	    }
     }
 }

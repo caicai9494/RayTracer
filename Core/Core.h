@@ -14,7 +14,9 @@
 #include <ctype.h>
 #include <ctime>
 
-#define PI	3.14159265f
+const float PI	= 3.14159265f;
+const float RAYOFFSET = 0.0001f;
+const int MaxTrianglesPerBox = 10;
 
 
 typedef unsigned int UINT;

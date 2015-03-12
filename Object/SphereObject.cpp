@@ -14,26 +14,37 @@ void SphereObject::SetCenter(const Vector3 &c)
 
 bool SphereObject::Intersect(const Ray &ray,Intersection &hit)const
 {
-    float t;
     Vector3 P,D;
     P = ray.Origin;
     D = ray.Direction;
-    t = Center.Dot(D) - P.Dot(D);
 
-    if(t < 0 || t >= hit.HitDistance)
-	return false;
+    Vector3 ray_to_center;
+    ray_to_center = Center - P;
+
+    float q_dist;
+    q_dist = ray_to_center.Dot(D);
 
     Vector3 Q;
-    Q = P + D * t;
+    Q = P + q_dist * D;
 
-    if(Q.Distance(Center) > Radius)
+    float q_to_center;
+    q_to_center = Q.Distance(Center);
+    if(q_to_center > Radius)
 	return false;
 
-    hit.HitDistance = t;
-    hit.Position = P + t * D;
-    hit.Normal = hit.Position - Center;
-    hit.Normal.Normalize();
+    float hit_to_q;
+    hit_to_q = sqrt(Radius * Radius - q_to_center * q_to_center);
 
-    return true;
+    if(q_dist - hit_to_q >= 0)
+    {
+	    //Vector3 Q1;
+	hit.HitDistance = q_dist - hit_to_q;
+	hit.Position = P + hit.HitDistance * D;
+	hit.Normal = (hit.Position - Center) / Radius;
+
+	return true;
+    }
+
+    return false;
 }
 
