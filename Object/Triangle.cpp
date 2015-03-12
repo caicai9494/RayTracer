@@ -69,3 +69,18 @@ bool Triangle::Intersect(const Ray &ray, Intersection &hit)
     return true;
 
 }
+
+Vector3 Triangle::ComputeCenter()
+{
+    Vector3 a, b, c, b_a, c_a;
+    float alpha = 0.5, beta = 0.5;
+
+    a = Vtx[0]->Position;
+    b = Vtx[1]->Position;
+    c = Vtx[2]->Position;
+
+    b_a = b - a;
+    c_a = c - a;
+
+    return a + alpha * b_a + beta * c_a;
+}

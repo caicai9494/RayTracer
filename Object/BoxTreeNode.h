@@ -18,15 +18,21 @@ class BoxTreeNode
     friend class BoxTreeObject;
 public:
         BoxTreeNode();
-	~BoxTreeNode(){}
+	~BoxTreeNode();
+
+
 	bool Intersect(const Ray &ray, Intersection &hit)const ;
+	bool IntersectVolume(const Ray &ray, float &t)const ;
 	void Construct(int count, Triangle** tri);
+
+	int GetNumTriangles();
+	bool IsLeaf() const;
 private:
 	Vector3 BoxMax, BoxMin;
 	BoxTreeNode *Child1, *Child2;
 	Triangle *Tri[MaxTrianglesPerBox];
-
-	Vector3 FindBoxLimit(int count, Triangle** tri);
+	void FindBoxLimit(int count, Triangle** tri);
+	int NumTriangles;
 };
 
 ////////////////////////////////////////////////////////////////////////////////

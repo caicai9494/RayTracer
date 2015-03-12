@@ -19,7 +19,7 @@ class BoxTreeObject: public Object
 public:
         BoxTreeObject();
 	~BoxTreeObject();
-	bool Intersect(const Ray &ray, Intersection &hit)const {return false;}
+	bool Intersect(const Ray &ray, Intersection &hit)const ;
 	void Construct(MeshObject &obj);
 private:
 	BoxTreeNode *RootNode;

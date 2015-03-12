@@ -1,5 +1,5 @@
 CC=g++
-CPPFLAGS=-c -Wall -g -I ~/Mooc/computer_graphics/raytracer/proj1 
+CPPFLAGS=-c -Wall -g -I ~/Mooc/computer_graphics/raytracer/proj1  -std=c++11 -O
 OBJ= Core/Bitmap.o Core/Color.o Core/Vector3.o Core/Matrix34.o \
      \
      Main.o Camera.o Scene.o RayTrace.o\

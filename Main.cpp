@@ -24,6 +24,7 @@ void project1_extra();
 int main(int argc,char **argv) {
 
         srand(time(NULL));
+	//project1();
 	//project1_extra();
 	project2();
 	return 0;
@@ -87,7 +88,7 @@ void project1() {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void Sphere()
+void project1_extra()
 { 
     Scene scn;
     scn.SetSkyColor(Color(0.8f, 0.8f, 1.0f));
@@ -139,6 +140,7 @@ void project2()
      MeshObject dragon;
      dragon.LoadPLY("Model/dragon.ply");
      //dragon.Smooth();
+     //scn.AddObject(dragon);
      Watch::EndTimer();
 
      Watch::StartTimer();
@@ -177,8 +179,10 @@ void project2()
      cam.LookAt(Vector3(-0.1f,0.1f,0.2f),Vector3(-0.05f,0.12f,0.0f));
      cam.SetFOV(40.0f);
      cam.SetAspect(1.33f);
-     cam.SetResolution(800,600);
+     cam.SetResolution(300,240);
       //Render image
+     Watch::StartTimer();
      cam.Render(scn);
+     Watch::EndTimer();
      cam.SaveBitmap("project2.bmp");
 }

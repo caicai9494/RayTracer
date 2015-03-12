@@ -10,6 +10,7 @@ void InstanceObject::SetChild(Object &obj)
 {
     child = &obj;
 }
+
 void InstanceObject::SetMatrix(const Matrix34 &mtx)
 {
     Matrix = mtx;

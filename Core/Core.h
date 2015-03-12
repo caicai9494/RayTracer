@@ -16,7 +16,7 @@
 
 const float PI	= 3.14159265f;
 const float RAYOFFSET = 0.0001f;
-const int MaxTrianglesPerBox = 10;
+const int MaxTrianglesPerBox = 100;
 
 
 typedef unsigned int UINT;
@@ -24,7 +24,27 @@ inline float RangeRand(float lower, float up)
 {
     return float(rand())/RAND_MAX * (up - lower) + lower;
 }
+template<typename T>
+inline T Max(T a, T b, T c)
+{
+    if(a >= b && a >= c)
+	return a;
+    else if(b > a && b > c)
+	return b;
+    else 
+	return c;
+}
 
+template<typename T>
+inline T Min(T a, T b, T c)
+{
+    if(a <= b && a <= c)
+	return a;
+    else if(b < a && b < c)
+	return b;
+    else 
+	return c;
+}
 inline int Min(int a,int b)					{return a<b ? a : b;}
 inline float Min(float a,float b)			{return a<b ? a : b;}
 inline int Max(int a,int b)					{return a>b ? a : b;}

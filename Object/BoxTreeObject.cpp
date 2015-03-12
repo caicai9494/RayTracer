@@ -6,7 +6,7 @@ BoxTreeObject::BoxTreeObject():Object()
 }
 BoxTreeObject::~BoxTreeObject()
 {
-    DeleteNode(RootNode);
+    //DeleteNode(RootNode);
 }
 
 void BoxTreeObject::DeleteNode(BoxTreeNode *node)
@@ -29,4 +29,13 @@ void BoxTreeObject::Construct(MeshObject &obj)
 
     RootNode = new BoxTreeNode;
     RootNode->Construct(obj.NumTriangles, triangles);
+}
+bool BoxTreeObject::Intersect(const Ray &ray, Intersection &hit)const 
+{
+    bool success = false;
+    float t;
+    if(RootNode->IntersectVolume(ray, t))
+        success = RootNode->Intersect(ray, hit);
+
+    return success;
 }

@@ -33,22 +33,36 @@ bool RayTrace::TraceRay(const Ray &ray, Intersection &hit, int depth)
 	float coeff = intensity * dotProduct;
 	if(coeff > 0)
 	{
+	        temp.Scale(coeff);
+	        //add this lighting to the pixel
+	        hit.Shade.Add(temp);
+	    /*
 	    Intersection shadowHit;
 
 	    Ray shadowRay;
 	    shadowRay.Origin = hit.Position;
 	    shadowRay.Direction = toLight;
-	    if(!Scn->Intersect(shadowRay, shadowHit))
+	    bool isBlocked = false;
+	    if(Scn->Intersect(shadowRay, shadowHit))
+	    {
+		float blockDistance = shadowHit.Position.Distance(shadowRay.Origin);
+		float lightDistance = ltPos.Distance(hit.Position);
+		if(blockDistance < lightDistance)
+		    isBlocked = true;
+	    }
+
+	    if(!isBlocked)
 	    {
 	        temp.Scale(coeff);
 	        //add this lighting to the pixel
 	        hit.Shade.Add(temp);
 	    }
+	    */
 	}
     }
 
-    if(depth == MaxDepth)
-	return true;
+    //if(depth == MaxDepth)
+//	return true;
 
     return true;
 }
