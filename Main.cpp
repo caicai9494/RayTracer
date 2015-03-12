@@ -141,8 +141,12 @@ void project2()
      //dragon.Smooth();
      Watch::EndTimer();
 
+     Watch::StartTimer();
+
      BoxTreeObject tree;
      tree.Construct(dragon);
+
+     Watch::EndTimer();
      scn.AddObject(tree);
       //Create instance
      InstanceObject inst(tree);

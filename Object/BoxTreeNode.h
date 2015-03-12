@@ -15,6 +15,7 @@
 
 class BoxTreeNode
 {
+    friend class BoxTreeObject;
 public:
         BoxTreeNode();
 	~BoxTreeNode(){}

@@ -1,17 +1,32 @@
 #include <Object/BoxTreeObject.h>
-#include <iostream>
-using namespace std;
 
+BoxTreeObject::BoxTreeObject():Object()
+{
+    RootNode = NULL;
+}
+BoxTreeObject::~BoxTreeObject()
+{
+    DeleteNode(RootNode);
+}
+
+void BoxTreeObject::DeleteNode(BoxTreeNode *node)
+{
+    if(node->Child1 == NULL)
+    {
+	delete node;
+	return;
+    }
+    DeleteNode(node->Child1);
+    DeleteNode(node->Child2);
+}
 void BoxTreeObject::Construct(MeshObject &obj)
 {
-    /*
+    //cout << obj.NumTriangles << endl;
+    Triangle **triangles;
+    triangles = new Triangle*[obj.NumTriangles];
     for(int i = 0; i < obj.NumTriangles; i++)
-    {
-	cout << obj.Triangles[i].Vtx[0]->Position.x << " " << endl;
-	cout << obj.Triangles[i].Vtx[0]->Position.y << " " << endl;
-	cout << obj.Triangles[i].Vtx[0]->Position.z << " " << endl;
-    }
-    */
+	triangles[i] = obj.Triangles + i;
 
-    RootNode->Construct(obj.NumTriangles, &(obj.Triangles));
+    RootNode = new BoxTreeNode;
+    RootNode->Construct(obj.NumTriangles, triangles);
 }
