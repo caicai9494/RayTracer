@@ -6,7 +6,6 @@
 #define CSE168_PLANEOBJECT_H
 
 #include <Object/Object.h>
-#include <Material/LambertMaterial.h>
 #include <Core/Matrix34.h>
 
 ////////////////////////////////////////////////////////////////////////////////

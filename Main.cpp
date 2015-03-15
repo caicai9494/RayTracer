@@ -22,17 +22,18 @@
 void project1();
 void project2();
 void project3();
+void project4();
 void project1_extra();
 
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc,char **argv) {
 
-        srand(time(NULL));
-	//project1();
+        //srand(time(NULL));
+	project3();
 	//project1_extra();
 	//project2();
-	project3();
+	//project3();
 	return 0;
 }
 
@@ -43,12 +44,9 @@ void project1() {
 	Scene scn;
 	scn.SetSkyColor(Color(0.8f, 0.9f, 1.0f));
 
-	// Create Material
-	LambertMaterial blueMaterial;
-	blueMaterial.SetColor(Color::BLUE);
 	// Create boxes
 	MeshObject box1;
-	box1.MakeBox(5.0f,0.1f,5.0f, &blueMaterial);
+	box1.MakeBox(5.0f,0.1f,5.0f);
 	scn.AddObject(box1);
 
 	MeshObject box2;
@@ -144,7 +142,7 @@ void project2()
       //Create dragon
      Watch::StartTimer();
      MeshObject dragon;
-     dragon.LoadPLY("Model/dragon.ply");
+     dragon.LoadPLY("Model/dragon.ply", 0);
      //dragon.Smooth();
      //scn.AddObject(dragon);
      Watch::EndTimer();
@@ -192,7 +190,7 @@ void project2()
      Watch::EndTimer();
      cam.SaveBitmap("project2.bmp");
 }
-#ifdef PROJECT3
+
 void project3() 
 {
 	// Create scene
@@ -229,7 +227,7 @@ void project3()
 
 	// Load dragon mesh
 	MeshObject dragon;
-	dragon.LoadPLY("Model/dragon.ply");
+	dragon.LoadPLY("Model/dragon.ply", 0);
 
 	// Create box tree 
 	BoxTreeObject tree;
@@ -238,16 +236,16 @@ void project3()
 	// Create dragon instances
 	Matrix34 mtx;
 	for (int i = 0; i<nummtls; i++) {
-		InstanceObject *inst = new InstanceObject(tree);
-		mtx.d.Set(0.0f, 0.0f, -0.1f*float(i));
-		inst->SetMatrix(mtx);
-		inst->SetMaterial(&mtl[i]);
-		scn.AddObject(*inst);
-	}
+	    InstanceObject *inst = new InstanceObject(tree);
+	    mtx.d.Set(0.0f, 0.0f, -0.1f*float(i));
+	    inst->SetMatrix(mtx);
+	    inst->SetMaterial(&mtl[i]);
+	    scn.AddObject(*inst);
+        }
 
 	// Create ground
 	LambertMaterial lambert;
-	lambert.SetColor(Color(0.3f, 0.3f, 0.35f));
+	lambert.SetDiffuseColor(Color(0.3f, 0.3f, 0.35f));
 
 	MeshObject ground;
 	ground.MakeBox(2.0f, 0.11f, 2.0f, &lambert);
@@ -272,4 +270,3 @@ void project3()
 	cam.Render(scn);
 	cam.SaveBitmap("project3.bmp");
 }
-#endif

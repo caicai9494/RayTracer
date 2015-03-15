@@ -1,6 +1,5 @@
 CC=g++
-#CPPFLAGS=-c -Wall -g -I ~/Mooc/computer_graphics/raytracer/proj1  -std=c++11 -O
-CPPFLAGS=-c -Wall -g -I .  -std=c++11 -O3
+CPPFLAGS=-c -Wall -g -I .  -std=c++11 -O
 OBJ= Core/Bitmap.o Core/Color.o Core/Vector3.o Core/Matrix34.o \
      \
      Main.o Scene.o \
@@ -9,9 +8,9 @@ OBJ= Core/Bitmap.o Core/Color.o Core/Vector3.o Core/Matrix34.o \
      Object/PlaneObject.o  Object/SphereObject.o \
      Object/BoxTreeObject.o  Object/BoxTreeNode.o \
      \
-     Material/LambertMaterial.o Material/AshikhminMaterial.o\
-     \
-     Camera/Camera.o Camera/RayTrace.o
+     Camera/Camera.o Camera/RayTrace.o\
+     Material/LambertMaterial.o Material/AshikhminMaterial.o
+    
 
 
 TARGET= raytracer

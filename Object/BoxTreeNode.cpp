@@ -9,30 +9,6 @@ BoxTreeNode::~BoxTreeNode()
 {
 }
 
-/*
-bool BoxTreeNode::IntersectVolume(const Ray &ray, float &t) {
-
-	//get test t values for x, y, z (0,1,2)
-	float t1[3], t2[3], tmin, tmax;
-	for (int i = 0; i < 3; ++i) {
-		t1[i] = ((BoxMin[i] - ray.Origin[i]) / ray.Direction[i]);
-		t2[i] = ((BoxMax[i] - ray.Origin[i]) / ray.Direction[i]);
-	}
-	tmin = Max(Min(t1[0], t2[0]), Min(t1[1], t2[1]), Min(t1[2], t2[2]));
-	tmax = Min(Max(t1[0], t2[0]), Max(t1[1], t2[1]), Max(t1[2], t2[2]));
-
-	if (tmin <= tmax) {
-		t = tmin;
-		return true;
-	}
-	else if (tmin < 0) {
-		t = tmin;
-		return true;
-	}
-	//tmax < 0
-	return false;
-}
-*/
 bool BoxTreeNode::IntersectVolume(const Ray &ray, float &t)
 {
     Vector3 t1, t2;

@@ -6,7 +6,6 @@
 #define CSE168_SPHEREOBJECT_H
 
 #include <Object/Object.h>
-#include <Material/LambertMaterial.h>
 #include <Core/Matrix34.h>
 
 ////////////////////////////////////////////////////////////////////////////////

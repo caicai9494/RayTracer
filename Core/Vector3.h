@@ -32,6 +32,10 @@ public:
 	float Magnitude() const										{return sqrtf(x*x+y*y+z*z);}
 	float Magnitude2() const									{return x*x+y*y+z*z;}
 	void Normalize()											{Scale(1.0f/Magnitude());}
+	bool Opposing(const Vector3 &a)
+	{
+	    return PI / 2.0 < acos(Dot(a) / Magnitude() * a.Magnitude());
+	}
 
 	float Distance(const Vector3 &a) const						{return sqrtf((x-a.x)*(x-a.x)+(y-a.y)*(y-a.y)+(z-a.z)*(z-a.z));}
 	float Distance2(const Vector3 &a) const						{return (x-a.x)*(x-a.x)+(y-a.y)*(y-a.y)+(z-a.z)*(z-a.z);}

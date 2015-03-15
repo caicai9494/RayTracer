@@ -17,10 +17,15 @@
 const float PI	= 3.14159265f;
 const float RAYOFFSET = 0.0001f;
 const int MaxTrianglesPerBox = 100;
-const int MaxDepth = 10;
+const int MaxDepth = 5;
+const int SuperSampling = 2;
 
 
 typedef unsigned int UINT;
+inline float Rand1()
+{
+    return float(rand())/RAND_MAX;
+}
 inline float RangeRand(float lower, float up)
 {
     return float(rand())/RAND_MAX * (up - lower) + lower;

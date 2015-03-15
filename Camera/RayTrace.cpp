@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-RayTrace::RayTrace(const Scene &s)
+RayTrace::RayTrace(Scene &s)
 {
     Scn = &s;
 
@@ -16,8 +16,6 @@ RayTrace::RayTrace(const Scene &s)
 
 bool RayTrace::TraceRay(const Ray &ray, Intersection &hit, int depth)
 {
-    if(depth == MaxDepth)
-	return true;
     // didn't hit any object.
     if(!Scn->Intersect(ray, hit))
     {
@@ -27,20 +25,23 @@ bool RayTrace::TraceRay(const Ray &ray, Intersection &hit, int depth)
 
     // hit 
     hit.Shade = Color::BLACK;
-    //hit.Shade = Color(0.2f, 0.1f, 0.1f);
-    //hit.Shade.Scale(0.5f);
     for (UINT i = 0; i < Scn->GetNumLights(); ++i) 
     {
-	Color lightColor = Color::BLACK;
+	Color lightColor;// = Color::BLACK;
 	//compute lighting with this light 
 	Vector3 toLight, ltPos;
 	float intensity = Scn->GetLight(i).Illuminate(hit.Position, lightColor, toLight, ltPos);
+	if(intensity == 0) 
+	    continue;
+
+	/*
 	float dotProduct = (toLight).Dot(hit.Normal);
 	float coeff = intensity * dotProduct;
 
 	//oppose the light
 	if(coeff <= 0)
 	    continue;
+	    */
 
 	//shadow
 	Intersection shadowHit;
@@ -62,12 +63,13 @@ bool RayTrace::TraceRay(const Ray &ray, Intersection &hit, int depth)
 	{
 	    
 	    Color reflectance = lightColor;
-	    reflectance.Scale(PI * coeff);
-	    if(hit.Mtl)
-		hit.Mtl->ComputeReflectance(reflectance, toLight, -ray.Direction, hit);
 
-	    //lightColor.Scale(coeff);
-	    //lightColor.Multiply(reflectance);
+	    float dotProduct = (toLight).Dot(hit.Normal);
+	    float coeff = Max(0.0f,intensity * dotProduct);
+
+	    reflectance.Scale(PI * coeff);
+	    if(hit.Mtl != NULL)
+		hit.Mtl->ComputeReflectance(reflectance, -ray.Direction, toLight, hit);
 
 	    hit.Shade.Add(reflectance);
 	    //add this lighting to the pixel
@@ -88,25 +90,28 @@ bool RayTrace::TraceRay(const Ray &ray, Intersection &hit, int depth)
 	}
     }
 
+    if(depth == MaxDepth)
+	return true;
 
-		/*
-    if(!hit.Mtl)
+    if(hit.Mtl != NULL)
     {
-	Vector3 out;
+	//cout << "debug\n";
 	Color reflectColor;
 	Intersection secondaryHit;
 
 	Ray secondaryRay;
-	//hit.Mtl->ComputeReflectance(reflectColor, hit.Position, out, secondaryHit);
 	secondaryRay.Origin = hit.Position;
-	secondaryRay.Direction = out;
+	hit.Mtl->GenerateSample(reflectColor, secondaryRay.Direction, -ray.Direction, hit);
+	//black returned
+	if(reflectColor.GetIntVector().Magnitude() == 0)
+	    return false;
 
-	//RayTrace(secondaryRay, secondaryHit, depth + 1);
-	//hit.Shade.Mu
+	TraceRay(secondaryRay, secondaryHit, depth + 1);
+
+	secondaryHit.Shade.Multiply(reflectColor);
+	hit.Shade.Add(secondaryHit.Shade);
     }
-    */
 
     return true;
 }
 
-void RenderPixel(int x, int y);

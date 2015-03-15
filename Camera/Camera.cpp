@@ -65,9 +65,25 @@ void Camera::RenderPixel(Scene &s, int x, int y)
     ray.Direction = -WorldMatrix.c / Aspect + (((float)x)/XRes - 0.5) * CW * CX + 
 				     (((float)y)/YRes - 0.5) * CH * CY;
     ray.Direction.Normalize();
-    Intersection hit;
 
     RayTrace rayTrace(s);
-    rayTrace.TraceRay(ray, hit);
-    BMP->SetPixel(x, y, hit.Shade.ToInt());
+    Intersection hit;
+
+    Vector3 accumulate = Vector3::ORIGIN;
+    //Color accumulate = Color::BLACK;
+    for(UINT i = 0; i < SuperSampling; i++)
+    {
+	for(UINT j = 0; j < SuperSampling; j++)
+	{
+	    hit.HitDistance = 1000;
+            rayTrace.TraceRay(ray, hit);
+	    accumulate += hit.Shade.GetIntVector();
+	    //accumulate.Add(hit.Shade);
+	}
+    }
+    accumulate = accumulate / (float)(SuperSampling * SuperSampling);
+    //accumulate.Scale(1/(float)SuperSampling * SuperSampling);
+    BMP->SetPixel(x, y, Color(accumulate).ToInt());
+    //BMP->SetPixel(x, y, accumulate.ToInt());
+
 }

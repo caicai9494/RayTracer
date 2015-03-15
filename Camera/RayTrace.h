@@ -7,7 +7,6 @@
 
 #include <Core/Vector3.h>
 #include <Scene.h>
-#include <Material/LambertMaterial.h>
 #include <Camera/Ray.h>
 #include <Camera/Intersection.h>
 
@@ -15,11 +14,11 @@
 
 class RayTrace {
 public:
-    RayTrace(const Scene &s);
+    RayTrace(Scene &s);
     bool TraceRay(const Ray &ray, Intersection &hit, int depth = 1);
 
 private:
-    const Scene *Scn;
+    Scene *Scn;
 
     // settings 
     int MaxDepth;
