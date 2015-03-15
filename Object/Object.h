@@ -5,21 +5,21 @@
 #ifndef CSE168_OBJECT_H
 #define CSE168_OBJECT_H
 
-#include <Ray.h>
-#include <Intersection.h>
+#include <Camera/Ray.h>
+#include <Camera/Intersection.h>
+#include <Material/Material.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 
 class Intersection;
+class Material;
 
 class Object {
 public:
         Object(){}
 	virtual ~Object(){}
-	virtual bool Intersect(const Ray &ray, Intersection &hit)
-	{
-	    return false;
-	}
+	virtual bool Intersect(const Ray &ray, Intersection &hit) = 0;
+
 };
 
 ////////////////////////////////////////////////////////////////////////////////

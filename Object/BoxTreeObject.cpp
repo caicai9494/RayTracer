@@ -6,12 +6,12 @@ BoxTreeObject::BoxTreeObject():Object()
 }
 BoxTreeObject::~BoxTreeObject()
 {
-    //DeleteNode(RootNode);
+    DeleteNode(RootNode);
 }
 
 void BoxTreeObject::DeleteNode(BoxTreeNode *node)
 {
-    if(node->Child1 == NULL)
+    if(node->Child1 == NULL && node->Child2 == NULL)
     {
 	delete node;
 	return;

@@ -6,7 +6,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-MeshObject::MeshObject() {
+MeshObject::MeshObject():Object() {
 	NumVertexes=0;
 	NumTriangles=0;
 

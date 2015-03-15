@@ -7,7 +7,7 @@
 
 #include <Object/Vertex.h>
 #include <Material/Material.h>
-#include <Ray.h>
+#include <Camera/Ray.h>
 #include <Core/Matrix34.h>
 
 ////////////////////////////////////////////////////////////////////////////////

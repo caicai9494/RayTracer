@@ -6,7 +6,7 @@
 #define CSE168_BOXTREENODE_H
 
 #include <Core/Vector3.h>
-#include <Intersection.h>
+#include <Camera/Intersection.h>
 #include <Object/Triangle.h>
 #include <Object/Vertex.h>
 

@@ -2,8 +2,10 @@
 #include <iostream>
 using namespace std;
 
-BoxTreeNode::~BoxTreeNode(){}
 BoxTreeNode::BoxTreeNode(): Child1(0), Child2(0), NumTriangles(0)
+{
+}
+BoxTreeNode::~BoxTreeNode()
 {
 }
 
@@ -33,14 +35,6 @@ bool BoxTreeNode::IntersectVolume(const Ray &ray, float &t) {
 */
 bool BoxTreeNode::IntersectVolume(const Ray &ray, float &t)
 {
-	float t1[3], t2[3], tmin, tmax;
-	for (int i = 0; i < 3; ++i) {
-		t1[i] = ((BoxMin[i] - ray.Origin[i]) / ray.Direction[i]);
-		t2[i] = ((BoxMax[i] - ray.Origin[i]) / ray.Direction[i]);
-	}
-	tmin = Max(Min(t1[0], t2[0]), Min(t1[1], t2[1]), Min(t1[2], t2[2]));
-	tmax = Min(Max(t1[0], t2[0]), Max(t1[1], t2[1]), Max(t1[2], t2[2]));
-	/*
     Vector3 t1, t2;
     t1 = BoxMin - ray.Origin;
     t2 = BoxMax - ray.Origin;
@@ -53,14 +47,12 @@ bool BoxTreeNode::IntersectVolume(const Ray &ray, float &t)
     t2.y /= ray.Direction.y;
     t2.z /= ray.Direction.z;
 
-    float tmin = Max((Min(t1.x, t2.x), Min(t1.y, t2.y)), Min(t1.z, t2.z));
-    float tmax = Min((Max(t1.x, t2.x), Max(t1.y, t2.y)), Max(t1.z, t2.z));
-    */
+    float tmin = Max(Min(t1.x, t2.x), Min(t1.y, t2.y), Min(t1.z, t2.z));
+    float tmax = Min(Max(t1.x, t2.x), Max(t1.y, t2.y), Max(t1.z, t2.z));
 
     if(tmin <= tmax)
     {
 	t = tmin;
-	//cout << t << endl;
 	return true;
     }
 
@@ -69,7 +61,6 @@ bool BoxTreeNode::IntersectVolume(const Ray &ray, float &t)
 
 bool BoxTreeNode::Intersect(const Ray &ray, Intersection &hit)
 {
-	//cout << NumTriangles<<" debug\n";
     if(IsLeaf() && NumTriangles <= MaxTrianglesPerBox && NumTriangles > 0)
     {
 	bool success = false;
@@ -90,24 +81,6 @@ bool BoxTreeNode::Intersect(const Ray &ray, Intersection &hit)
     
     if(Child2 != 0)
         isHit2 = Child2->IntersectVolume(ray, volhit[1]);
-
-    /*
-    bool success = false;
-    if(isHit2 && isHit1)
-    {
-	if(volhit[0].HitDistance < volhit[1].HitDistance)
-	    return Child1->Intersect(ray,hit) || Child2->Intersect(ray,hit);
-	else 
-	    return Child2->Intersect(ray,hit) || Child1->Intersect(ray,hit);
-    }
-    else if(isHit1)
-	success = Child1->Intersect(ray, hit);
-    else if(isHit2)
-	success = Child2->Intersect(ray, hit);
-
-    return success;
-    */
-
 
     if(!isHit1 && !isHit2)
 	return false;
@@ -151,6 +124,7 @@ bool BoxTreeNode::IsLeaf() const
 {
     return NumTriangles > 0;
 }
+
 void BoxTreeNode::FindBoxLimit(int count, Triangle** tri)
 {
     BoxMax.x = BoxMin.x = tri[0]->Vtx[0]->Position.x;
@@ -169,15 +143,11 @@ void BoxTreeNode::FindBoxLimit(int count, Triangle** tri)
 	    }
 	}
     }
-
-   // return Vector3(xmax - xmin, ymax - ymin, zmax - zmin);
 }
 
 void BoxTreeNode::Construct(int count, Triangle** tri)
 {
     FindBoxLimit(count, tri);
-    //Vector3 BoxSize;
-    //BoxSize = FindBoxLimit(count, tri);
 
     // copy tri array
     if(count < MaxTrianglesPerBox)

@@ -15,6 +15,7 @@ public:
     LambertMaterial();
     ~LambertMaterial();
     void ComputeReflectance(Color &col, const Vector3 &in, const Vector3 &out, const Intersection &hit);
+    void GenerateSample(Color &col, Vector3 &in, const Vector3 &out, const Intersection &hit);
     void SetColor(const Color& color);
 
 private:

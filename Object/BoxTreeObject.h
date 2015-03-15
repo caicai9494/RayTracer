@@ -6,7 +6,7 @@
 #define CSE168_BOXTREEOBJECT_H
 
 #include <Core/Vector3.h>
-#include <Intersection.h>
+#include <Camera/Intersection.h>
 #include <Object/BoxTreeNode.h>
 #include <Object/MeshObject.h>
 #include <Object/Triangle.h>

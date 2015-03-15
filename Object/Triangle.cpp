@@ -2,11 +2,7 @@
 
 Triangle::Triangle()
 {
-    Vtx[0] = 0;
-    Vtx[1] = 0;
-    Vtx[2] = 0;
-
-    Mtl = 0;
+    Mtl = NULL;
 }
 
 bool Triangle::Intersect(const Ray &ray, Intersection &hit) 
@@ -55,7 +51,9 @@ bool Triangle::Intersect(const Ray &ray, Intersection &hit)
 
     hit.Position = p + t * ray.Direction;
     hit.HitDistance = t;
-    hit.Mtl = Mtl;
+
+    if(Mtl)
+        hit.Mtl = Mtl;
 
     Vector3 na, nb, nc; 
     na = Vtx[0]->Normal;
@@ -66,6 +64,10 @@ bool Triangle::Intersect(const Ray &ray, Intersection &hit)
 		 alpha * nb + 
 		 beta * nc;
     hit.Normal.Normalize();
+
+    hit.TangentU.Cross(Vector3::YAXIS, hit.Normal);
+    hit.TangentU.Normalize();
+    hit.TangentV.Cross(hit.Normal, hit.TangentU);
     return true;
 
 }
