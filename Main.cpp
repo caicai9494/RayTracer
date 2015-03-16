@@ -14,8 +14,8 @@
 #include <stdio.h>
 #include <time.h>
 #include <Core/Watch.h>
-#include <Material/AshikhminMaterial.h>
-#include <Material/LambertMaterial.h>
+#include <AshikhminMaterial.h>
+#include <LambertMaterial.h>
 
 #define PROJECT3
 
@@ -263,7 +263,7 @@ void project3()
 	cam.LookAt(Vector3(-0.5f, 0.25f, -0.2f), Vector3(0.0f, 0.15f, -0.15f));
 	cam.SetFOV(40.0f);
 	cam.SetAspect(1.33f);
-	cam.SetResolution(800, 600);
+	cam.SetResolution(1024, 800);
 	//cam.SetSuperSample(2);
 
 	// Render image

@@ -17,7 +17,7 @@
 const float PI	= 3.14159265f;
 const float RAYOFFSET = 0.0001f;
 const int MaxTrianglesPerBox = 100;
-const int MaxDepth = 5;
+const int MaxDepth = 10;
 const int SuperSampling = 2;
 
 

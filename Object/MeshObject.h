@@ -7,7 +7,7 @@
 
 #include <Object/Object.h>
 #include <Object/Triangle.h>
-#include <Material/LambertMaterial.h>
+#include <LambertMaterial.h>
 #include <Core/Matrix34.h>
 #include <fstream>
 

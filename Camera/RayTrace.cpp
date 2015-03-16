@@ -103,8 +103,8 @@ bool RayTrace::TraceRay(const Ray &ray, Intersection &hit, int depth)
 	secondaryRay.Origin = hit.Position;
 	hit.Mtl->GenerateSample(reflectColor, secondaryRay.Direction, -ray.Direction, hit);
 	//black returned
-	if(reflectColor.GetIntVector().Magnitude() == 0)
-	    return false;
+	//if(reflectColor.GetIntVector().Magnitude() == 0)
+	 //   return false;
 
 	TraceRay(secondaryRay, secondaryHit, depth + 1);
 
