@@ -29,7 +29,7 @@ void project1_extra();
 
 int main(int argc,char **argv) {
 
-        //srand(time(NULL));
+        srand(time(NULL));
 	project3();
 	//project1_extra();
 	//project2();
@@ -263,7 +263,7 @@ void project3()
 	cam.LookAt(Vector3(-0.5f, 0.25f, -0.2f), Vector3(0.0f, 0.15f, -0.15f));
 	cam.SetFOV(40.0f);
 	cam.SetAspect(1.33f);
-	cam.SetResolution(1024, 800);
+	cam.SetResolution(800, 600);
 	//cam.SetSuperSample(2);
 
 	// Render image

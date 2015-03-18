@@ -95,6 +95,7 @@ bool RayTrace::TraceRay(const Ray &ray, Intersection &hit, int depth)
 
     if(hit.Mtl != NULL)
     {
+
 	//cout << "debug\n";
 	Color reflectColor;
 	Intersection secondaryHit;
@@ -107,9 +108,9 @@ bool RayTrace::TraceRay(const Ray &ray, Intersection &hit, int depth)
 	 //   return false;
 
 	TraceRay(secondaryRay, secondaryHit, depth + 1);
-
 	secondaryHit.Shade.Multiply(reflectColor);
 	hit.Shade.Add(secondaryHit.Shade);
+
     }
 
     return true;

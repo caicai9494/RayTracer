@@ -2,7 +2,8 @@ CC=g++
 CPPFLAGS=-c -Wall -g -I .  -std=c++11 -O
 OBJ= Core/Bitmap.o Core/Color.o Core/Vector3.o Core/Matrix34.o \
      \
-     Main.o Scene.o \
+     Main.o \
+     Scene/Scene.o \
      \
      Object/MeshObject.o Object/InstanceObject.o Object/Triangle.o \
      Object/PlaneObject.o  Object/SphereObject.o \

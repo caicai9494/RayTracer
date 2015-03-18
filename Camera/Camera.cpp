@@ -75,6 +75,7 @@ void Camera::RenderPixel(Scene &s, int x, int y)
     {
 	for(UINT j = 0; j < SuperSampling; j++)
 	{
+
 	    hit.HitDistance = 1000;
             rayTrace.TraceRay(ray, hit);
 	    accumulate += hit.Shade.GetIntVector();

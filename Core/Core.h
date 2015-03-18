@@ -10,9 +10,11 @@
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include <cstring>
+#include <string>
 #include <ctype.h>
 #include <ctime>
+#include <memory>
 
 const float PI	= 3.14159265f;
 const float RAYOFFSET = 0.0001f;
