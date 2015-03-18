@@ -1,5 +1,4 @@
 #include <Material/LambertMaterial.h>
-#include "p.h"
 
 LambertMaterial::LambertMaterial(){}
 LambertMaterial::~LambertMaterial(){}

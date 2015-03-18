@@ -6,7 +6,7 @@
 #define CSE168_RAYTRACE_H
 
 #include <Core/Vector3.h>
-#include <Scene.h>
+#include <Scene/Scene.h>
 #include <Camera/Ray.h>
 #include <Camera/Intersection.h>
 

@@ -1,5 +1,4 @@
 #include <Material/AshikhminMaterial.h>
-#include "p.h"
 
 AshikhminMaterial::AshikhminMaterial(){}
 AshikhminMaterial::~AshikhminMaterial(){}

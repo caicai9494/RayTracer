@@ -1,4 +1,4 @@
-#include <Scene.h>
+#include <Scene/Scene.h>
 
 bool Scene::Intersect(const Ray &ray,Intersection &hit)const
 {

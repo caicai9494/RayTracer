@@ -7,7 +7,7 @@
 #include <Core/Matrix34.h>
 #include <Core/Vector3.h>
 #include <Core/Bitmap.h>
-#include <Scene.h>
+#include <Scene/Scene.h>
 #include <Camera/RayTrace.h>
 #include <Material/Material.h>
 #include <iostream>

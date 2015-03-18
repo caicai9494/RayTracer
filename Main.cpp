@@ -10,12 +10,10 @@
 #include <Camera/Camera.h>
 #include <Light/PointLight.h>
 #include <Light/DirectLight.h>
-#include <Scene.h>
-#include <stdio.h>
-#include <time.h>
+#include <Scene/Scene.h>
 #include <Core/Watch.h>
-#include <AshikhminMaterial.h>
-#include <LambertMaterial.h>
+#include <Material/AshikhminMaterial.h>
+#include <Material/LambertMaterial.h>
 
 #define PROJECT3
 
@@ -87,7 +85,7 @@ void project1() {
 
 	// Render image
 	cam.Render(scn);
-	cam.SaveBitmap("project1.bmp");
+	cam.SaveBitmap("Plot/project1.bmp");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -126,7 +124,7 @@ void project1_extra()
     cam.SetResolution(800,600);
     // Render image
     cam.Render(scn);
-    cam.SaveBitmap("spheres.bmp");
+    cam.SaveBitmap("Plot/spheres.bmp");
 
 }
 
@@ -188,7 +186,7 @@ void project2()
      Watch::StartTimer();
      cam.Render(scn);
      Watch::EndTimer();
-     cam.SaveBitmap("project2.bmp");
+     cam.SaveBitmap("Plot/project2.bmp");
 }
 
 void project3() 
@@ -268,5 +266,5 @@ void project3()
 
 	// Render image
 	cam.Render(scn);
-	cam.SaveBitmap("project3.bmp");
+	cam.SaveBitmap("Plot/project3.bmp");
 }
